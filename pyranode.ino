@@ -11,7 +11,7 @@ ADC *adc = new ADC(); // adc object
 FastCRC32 CRC32;
 uint32_t CRC_BUF_BYTES = 3 * 4;
 
-const uint32_t ADC_RESOLUTION = 12;//8
+const uint32_t ADC_RESOLUTION = 12;
 const uint32_t ADC_RANGE = 1 << ADC_RESOLUTION;
 const uint32_t ADC_MAX = ADC_RANGE - 1;
 const uint32_t ADC_MEDIAN_SAMPLES = 254;
@@ -123,41 +123,13 @@ void loop() {
 
     uint32_t ck = CRC32.crc32(crcbuf, CRC_BUF_BYTES);
 
- #if 0   
-    Serial.print("S\t");
-    Serial.print(elapsed);
-    Serial.print("\tL\t");
-    Serial.print(light);
-    Serial.print("\tT\t");
-    Serial.print(temperature);
-    Serial.print("\tC\t");
-    Serial.print(ck);
-#endif
     Serial.printf("S\t%lu\t"
                   "L\t%lu\t"
                   "T\t%lu\t"
                   "C\t%lu\r\n", elapsed, light, temperature, ck);
 
-#if 0
-    Serial.print("\tlight1: ");
-    long light1 = adc->analogRead(ADC_INPUT_PIN, ADC_1);
-    Serial.print(light1);
-
-    Serial.print("\tfail_flag: ");
-    Serial.print(adc->adc1->fail_flag, HEX);
-
-    Serial.print("\t ");
-    long dots = log(16 * light);
-    Serial.print(dstr + (64 - dots));
-#endif
-
     elapsed += TX_MILLISECONDS;
   }
-}
-
-void loop1() {
-  Serial.println(sinceTx);
-  delay(100);
 }
 
 // The Enphase PV data has 12 samples per hour or one sample every
@@ -165,4 +137,3 @@ void loop1() {
 
 // A median filter on a five minute window results in significantly
 // smoother graphs than Enphase.
-
