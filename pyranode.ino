@@ -1,5 +1,5 @@
 //-*-C++-*-
-// Photodiode or phototransistor from 19 to 18.
+// Photodiode or phototransistor from Teensy 3.0 pin 17 to 16.
 
 #include <FastCRC.h>
 #include <FastCRC_cpu.h>
@@ -7,7 +7,7 @@
 
 #include "ADC.h"
 
-ADC *adc = new ADC(); // adc object
+ADC *adc = new ADC(); // analog to digital converter driver object
 FastCRC32 CRC32;
 uint32_t CRC_BUF_BYTES = 3 * 4;
 
@@ -70,20 +70,17 @@ void setup() {
   // ADC_VERY_LOW_SPEED, ADC_LOW_SPEED, ADC_MED_SPEED, ADC_HIGH_SPEED_16BITS, ADC_HIGH_SPEED or ADC_VERY_HIGH_SPEED
   // see the documentation for more information
   adc->setConversionSpeed(ADC_VERY_LOW_SPEED ); // change the conversion speed
+
   // ADC_VERY_LOW_SPEED, ADC_LOW_SPEED, ADC_MED_SPEED, ADC_HIGH_SPEED or ADC_VERY_HIGH_SPEED
   adc->setSamplingSpeed(ADC_VERY_LOW_SPEED); // change the sampling speed
-  // with 16 averages, 12 bits resolution and ADC_HIGH_SPEED conversion and sampling
+
+  // With 16 averages, 12 bits resolution and ADC_HIGH_SPEED conversion and sampling
   // it takes about 32.5 us for a conversion
 
-  //  adc->enablePGA(64, ADC_0);
-  //  adc->enablePGA(64, ADC_1);
   delay(500);
 }
 
-const char* dstr =
-  "________________________________________________________________";
 uint32_t elapsed = 0;
-const int sensePin = 17;
 const uint32_t TX_MILLISECONDS = 1 * 1000;
 elapsedMillis sinceTx(TX_MILLISECONDS);
 void loop() {
